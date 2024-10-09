@@ -1,10 +1,10 @@
-# Declaration of lambda parameters with modifiers without type name
+# Simple lambda parameters with modifiers
 
-## Summary  
+## Summary
 
-Allow lambda parameter declarations with modifiers (`in` / `ref` / `out` / etc.) to be declared without requiring their type names.
+Allow lambda parameters to be declared with modifiers without requiring their type names. For example, `(ref entry) =>` rather than `(ref FileSystemEntry entry) =>`.
 
-For example, given this delegate:
+As another example, given this delegate:
 ```cs
 delegate bool TryParse<T>(string text, out T result);
 ```
@@ -30,25 +30,32 @@ implicit_anonymous_function_signature
     ;
 
 implicit_anonymous_function_parameter_list
--    : implicit_anonymous_function_parameter (',' implicit_anonymous_function_parameter)*
-+    : implicit_anonymous_function_parameter_ex (',' implicit_anonymous_function_parameter_ex)*
+    : implicit_anonymous_function_parameter (',' implicit_anonymous_function_parameter)*
     ;
 
 implicit_anonymous_function_parameter
-    : identifier
+-   : identifier
++   : 'scoped'? anonymous_function_parameter_modifier? identifier
     ;
 
-implicit_anonymous_function_parameter_ex
-    : anonymous_function_parameter_modifier? identifier
+explicit_anonymous_function_parameter
+    : 'scoped'? anonymous_function_parameter_modifier? type identifier
+    ;
+
+anonymous_function_parameter_modifier
+    : 'in'
+    | 'ref' 'readonly'?
+    | 'out'
     ;
 ```
 
-Notes
+### Notes
 
-1. This does not apply lambda without a parameter list.  e.g. `ref x => x.ToString()` would not be legal.
-2. A lambda parameter list cannot mix `implicit_anonymous_function_parameter_ex` and `explicit_anonymous_function_parameter` parameters.
-3. An implicit lambda with a parameter list cannot have attributes (open question on if we want to allow that though).
-4. An implicit lambda with a parameter list cannot have a default value (open question on if we want to allow that though).
+1. This does not apply to a lambda without a parameter list. `ref x => x.ToString()` would not be legal.
+1. A lambda parameter list still cannot mix `implicit_anonymous_function_parameter` and `explicit_anonymous_function_parameter` parameters.
+1. `(ref readonly p) =>`, `(scoped ref p) =>`, and `(scoped ref readonly p) =>` will be allowed, just as they are with explicit parameters, due to:
+   - [Low-level struct improvements](csharp-11.0/low-level-struct-improvements.md#Syntax) in C# 11
+   - [`ref readonly` parameters](csharp-12.0/ref-readonly-parameters.md#parameter-declarations) in C# 12
 
 ### Semantics
 
@@ -68,10 +75,9 @@ to those that have no out parameters.
 + is restricted to those that have the same modifiers in the same order (§10.7).
 ```
 
-### Open questions
+## Answered LDM questions
 
-1. Should attributes be allowed as well?
-2. Should default parameter values be allowed?
+### Allowing attributes or default parameter values
 
 Both seem viable, and may be worth it if we're doing the rest of this work.  With this formalization, we would likely instead say that:
 
@@ -103,3 +109,7 @@ We would also update the semantic specification to say:
 + is converted to a compatible delegate type or expression tree type, that type 
 + provides the parameter types (§10.7).
 ```
+
+#### Answer
+
+Neither attributes nor default parameter values will be supported without a fully-typed lambda.

@@ -7,7 +7,8 @@ All schedule items must have a public issue or checked-in proposal that can be l
 ## Schedule when convenient
 
 - Triage (working set)
-- Unbound generic types in 'nameof' operator. Cyrus + Joseph. https://github.com/dotnet/roslyn/pull/75368. https://github.com/dotnet/csharplang/issues/8480.
+- Unbound generic types in 'nameof' operator: https://github.com/dotnet/roslyn/pull/75368, https://github.com/dotnet/csharplang/issues/8480 (Cyrus + Joseph).
+- Simple lambda parameters with modifiers: https://github.com/dotnet/roslyn/pull/75400, https://github.com/dotnet/csharplang/pull/8487 (Cyrus)
 
 ## Recurring topics
 
@@ -29,31 +30,38 @@ All schedule items must have a public issue or checked-in proposal that can be l
 ### Wed Oct 9, 2024
 
 - Triage
-- Extensions
+- Extensions - https://github.com/dotnet/csharplang/blob/main/proposals/extensions_v2.md Cyrus/Mads/Dustin/Julien/Joseph
 
 ### Mon Oct 7, 2024
 
 - [yield in try / catch](https://github.com/dotnet/csharplang/issues/8414) (jared)
 - Extensions (Julien)
 
+## C# Language Design Notes for 2024
+
 ### Wed Oct 2, 2024
 
-- Extensions (Julien/Mads)
-- Field-backed properties: [open questions (short?)](https://github.com/dotnet/csharplang/blob/main/proposals/field-keyword.md#open-ldm-questions) (Chuck)
+[C# Language Design Meeting for October 2nd, 2024](https://github.com/dotnet/csharplang/blob/main/meetings/2024/LDM-2024-10-02.md)
+
+- Open questions in field
+    - `readonly` contexts and `set`
+    - `Conditional` code
+    - Interface properties and auto-accessors
+- Extensions
 
 ### Mon Sep 30, 2024
 
-- Extension [conversions](https://github.com/dotnet/csharplang/pull/8340) (Julien)
+[C# Language Design Meeting for September 30th, 2024](https://github.com/dotnet/csharplang/blob/main/meetings/2024/LDM-2024-09-30.md)
+
+- Extensions
 
 ### Wed Sep 25, 2024
 
-- C# 14 (Mads)
+- C# 14 (no notes)
 
 ### Mon Sep 23, 2024
 
 - *Design review* (no notes)
-
-## C# Language Design Notes for 2024
 
 ### Wed Sep 18, 2024
 
